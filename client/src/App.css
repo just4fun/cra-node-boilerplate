@@ -19,8 +19,9 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-response {
+  color: green;
+  font-style: italic;
 }
 
 @keyframes App-logo-spin {
