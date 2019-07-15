@@ -1,0 +1,20 @@
+{
+  "name": "cra-node-boilerplate",
+  "version": "0.0.1",
+  "description": "A boilerplate to show how to serve create-react-app with node server for injecting data dynamically and securing API without authentication.",
+  "main": "index.js",
+  "repository": "https://github.com/just4fun/cra-node-boilerplate",
+  "author": "just4fun <houritsunohikari@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^4.1.1",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "client": "yarn --cwd client start",
+    "server": "nodemon index.js",
+    "dev": "concurrently \"yarn run server\" \"yarn run client\""
+  }
+}
