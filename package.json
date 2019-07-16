@@ -18,6 +18,7 @@
     "start": "node index.js",
     "client": "yarn --cwd client start",
     "server": "nodemon index.js",
-    "dev": "concurrently \"yarn run server\" \"yarn run client\""
+    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+    "heroku-postbuild": "yarn --cwd client && yarn --cwd client run build"
   }
 }
