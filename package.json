@@ -1,7 +1,7 @@
 {
   "name": "cra-node-boilerplate",
   "version": "0.0.1",
-  "description": "A boilerplate to show how to serve create-react-app with node server for injecting data dynamically and securing API without authentication.",
+  "description": "A boilerplate to show how to serve create-react-app with node server for injecting server data dynamically into page and securing API without login authentication.",
   "main": "index.js",
   "repository": "https://github.com/just4fun/cra-node-boilerplate",
   "author": "just4fun <houritsunohikari@gmail.com>",
