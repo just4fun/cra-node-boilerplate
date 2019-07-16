@@ -9,7 +9,7 @@ class App extends Component {
   }
 
   handleButtonClick = () => {
-    fetch('api/have_some_fun', {
+    const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -17,13 +17,24 @@ class App extends Component {
       body: JSON.stringify({
         name: 'just4fun'
       })
-    })
-    .then(response => response.json())
-    .then(response => {
-      this.setState({
-        funText: response.data
+    };
+    // Only verify token in PROD mode, since client and server are
+    // started via two different servers (webpack and node) in DEV mode.
+    if (process.env.NODE_ENV === 'production') {
+      const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      Object.assign(options.headers, {
+        ...options.headers,
+        'CSRF-Token': token
       });
-    })
+    }
+
+    fetch('api/have_some_fun', options)
+      .then(response => response.json())
+      .then(response => {
+        this.setState({
+          funText: response.data
+        });
+      });
   }
 
   render() {
