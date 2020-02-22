@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const csrf = require('csurf');
+const csrf = require('./csurf');
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -31,13 +31,10 @@ const getRenderedIndexFile = (req, res) => {
     if (data) {
       const csrfToken = req.csrfToken();
 
-      console.log(`CSRF token generated in HTML meta tag is: ${csrfToken}`);
-      console.log(`CSRF secret generated in cookie is: ${req.cookies._csrf}`);
-
       res.send(
         data.replace('{{__OG_TITLE__}}', 'Good luck, have fun.')
             .replace('{{__SERVER_DATA__}}', 'Provided by Express')
-            .replace('{{__CSRF_TOKEN__}}', req.csrfToken())
+            .replace('{{__CSRF_TOKEN__}}', csrfToken)
       );
     }
   });
