@@ -53,4 +53,19 @@ if (process.env.NODE_ENV === "production") {
   app.get('*', csrfProtection, getRenderedIndexFile);
 }
 
+app.use((err, req, res, next) => {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err);
+
+  console.log('Express Error Handler: ' + JSON.stringify({
+    message: `Invalid CSRF Token: ${req.headers['csrf-token']}`,
+    csrfSecret: req.cookies._csrf,
+    userAgent: req.headers['user-agent'],
+    body: req.body
+  }));
+
+  res.status(403).send({
+    message: 'Invalid CSRF Token'
+  });
+})
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
