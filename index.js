@@ -16,7 +16,9 @@ app.post(
   '/api/have_some_fun',
   (req, res, next) => process.env.NODE_ENV === 'production' ? csrfProtection(req, res, next) : next(),
   (req, res) => {
-    console.log(`request from: *** ${req.body.name} ***`);
+    console.log(`CSRF token from API '${req.url}' is: ${req.headers['csrf-token']}`);
+    console.log(`CSRF secret from API '${req.url}' is: ${req.cookies._csrf}`);
+
     res.status(200).json({ data: 'Here is your fun'});
   }
 );
@@ -27,6 +29,11 @@ const getRenderedIndexFile = (req, res) => {
   const indexFile = path.join(__dirname, 'client/build', 'index.html');
   fs.readFile(indexFile, 'utf8', (err, data)  => {
     if (data) {
+      const csrfToken = req.csrfToken();
+
+      console.log(`CSRF token generated in HTML meta tag is: ${csrfToken}`);
+      console.log(`CSRF secret generated in cookie is: ${req.cookies._csrf}`);
+
       res.send(
         data.replace('{{__OG_TITLE__}}', 'Good luck, have fun.')
             .replace('{{__SERVER_DATA__}}', 'Provided by Express')
